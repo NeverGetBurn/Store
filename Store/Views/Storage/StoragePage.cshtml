@@ -12,39 +12,59 @@
     <title>Каталог</title>
 </head>
 <body>
-    <div class="ml-2">
-        <div class="dropdown">
-            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Меню
-            </button>
+    <div class="container mt-2">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                @*Кнопка меню*@
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Меню
+                    </button>
 
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/Storage/AddProduct">Добавить</a>
-                <a class="dropdown-item" href="/Storage/RemoveProduct">Удалить</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/Storage/AddProduct">Добавить</a>
+                        <a class="dropdown-item" href="/Storage/RemoveProduct">Удалить</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                @*Строка поиска*@
+                @using (Html.BeginForm("SearchProduct", "Storage"))
+                {
+                <div class="form-group">
+
+                    <input type="text" id="searchString" name="searchString" placeholder="Введите строку запроса" />
+                    <button type="submit" name="action" value="byDescription" class="btn btn-primary">Искать по описанию</button>
+                    <button type="submit" name="action" value="byName" class="btn btn-primary">Искать по названию</button>
+                </div>
+                }
             </div>
         </div>
+
     </div>
 
     <div class="row ml-2 justify-content-center">
+        @*Основной контент*@
         @foreach (Store.Models.Product p in Model)
         {
-        <div class="col-md-3 border mt-1 ml-0 mr-1 rounded-lg">
-            <h4>
-                <strong>@p.Name</strong>
-                <span class="float-right">@p.Price.ToString("# руб")</span>
-            </h4>
+            <div class="col-md-3 border mt-1 ml-0 mr-1 rounded-lg">
+                <h4>
+                    <strong>@p.Name</strong>
+                    <span class="float-right">@p.Price.ToString("# руб")</span>
+                </h4>
 
-            <hr class="my-1">
+                <hr class="my-1">
 
-            <span class="">@p.Description</span> <br />
+                <span class="">@p.Description</span> <br />
 
-            @if (p.Status == true)
-            {
-                <p class="text-success">В наличии</p> }
-            else
-            {
-                <p class="text-danger">Отсутствует</p>}
-        </div>
+                @if (p.Status == true)
+                {
+                    <p class="text-success">В наличии</p> }
+                else
+                {
+                    <p class="text-danger">Отсутствует</p>}
+            </div>
         }
     </div>
 
