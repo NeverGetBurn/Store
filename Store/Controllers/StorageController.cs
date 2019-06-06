@@ -12,11 +12,40 @@ namespace Store.Controllers
     public class StorageController : Controller
     {
         Context db = new Context();
+        readonly USDrate usd = new USDrate();
+        readonly EURrate eur = new EURrate();
+
 
         [HttpGet]
         public ActionResult StoragePage()
         {
+            ViewBag.Value = 1;
             return View(db.Products);
+        }
+
+        [HttpPost]
+        public ActionResult StoragePage(string valueType)
+        { //свитч блок?? комплексная модель??
+            if (valueType == "rubValue")
+            { 
+                ViewBag.Valute = "rub";
+                return RedirectToAction("StoragePage");
+            }
+
+            else if (valueType == "eurValue")
+            {
+                ViewBag.Value = 74.2344M; //поменять на eur.GetEUR();
+                ViewBag.Valute = "eur";
+                return View(db.Products);
+            }
+
+            else if (valueType == "usdValue")
+            {
+                ViewBag.Value = 62.4543M; //поменять на usd.GetUSD();
+                ViewBag.Valute = "usd";
+                return View(db.Products);
+            }
+            else return RedirectToAction("StoragePage"); //бесполезная ветка
         }
 
         [HttpPost]
@@ -44,7 +73,7 @@ namespace Store.Controllers
                 return View("StoragePage", prod);
             }
 
-            else return View("StoragePage"); // не решил как завершить эту ветку кода
+            else return View("StoragePage"); // бесполезная ветка
         }
 
         [HttpGet]
@@ -72,12 +101,12 @@ namespace Store.Controllers
         {
             return View(db.Products);
         }
-        
+
         [HttpPost]
         public ActionResult RemoveProduct(int ID)
         {
             Product deletedProduct = db.Products.Find(ID);
-            if(deletedProduct != null)
+            if (deletedProduct != null)
             {
                 db.Products.Remove(deletedProduct);
                 db.SaveChanges();

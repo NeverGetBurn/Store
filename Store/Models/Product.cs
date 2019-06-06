@@ -18,8 +18,8 @@ namespace Store.Models
         public string Description { get; set; }
 
         [Required(ErrorMessage ="Укажите цену")]
-        [Range(0, int.MaxValue, ErrorMessage ="Неверно указанная сумма")]
-        public int Price { get; set; }
+        [Range(0.0, Double.MaxValue, ErrorMessage ="Неверно указанная сумма")]
+        public decimal Price { get; set; }
 
         public bool Status { get; set; }
 
