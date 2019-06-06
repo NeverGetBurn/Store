@@ -9,9 +9,16 @@ namespace Store.Controllers
     public class HomeController : Controller
     {
         [HttpGet]
-        public ActionResult HomePage()
+        public ActionResult Index()
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Some(int number)
+        {
+            return View();
+        }
+
     }
 }

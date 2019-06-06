@@ -1,40 +1,36 @@
 ﻿@model Store.Models.Product
-<!DOCTYPE html>
+<div class="container-fluid mt-2">
+    @Html.ActionLink("Назад", "Index", "Storage", new { @class = "btn btn-secondary" })
+</div>
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary()
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <link rel="stylesheet" type="text/css" href="~/Content/Style1.css" />
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-    <title>Добавление продукта</title>
-</head>
-<body>
-    <div class="container-fluid mt-2">
-        <a class="btn btn-secondary" href="/Storage/StoragePage">Назад</a>
+
+    <div class="form-group col-sm-4">
+        <label for="Name">Название:</label>
+        <input id="Name" type="text" class="form-control" name="Name" placeholder="Введите название" />
     </div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.ValidationSummary()
+    <div class="form-group col-sm-4">
+        <label for="Price">Цена:</label>
+<!--
+        <input id="Price" type="number" class="form-control" name="Price" placeholder="Введите цену" />
+-->
+        @Html.EditorFor(m => m.Price, new { htmlAttributes = new { @class = "form-control", placeholder = "Введите цену",
+       data_val_number ="введено не число" } })
+        <p class="help-block">
+             @Html.ValidationMessageFor(m=>m.Price)
+        </p>
+    </div>
 
+    <div class="form-group col-sm-4">
+        <label>Описание:</label>
+        <input id="Description" type="text" class="form-control" name="Description" placeholder="Введите описание" />
+    </div>
+    <button type="submit" class="btn btn-primary ml-3">Добавить</button>
 
-        <div class="form-group col-sm-4">
-            <label for="Name">Название:</label>
-            <input id="Name" type="text" class="form-control" name="Name" placeholder="Введите название" />
-        </div>
-
-        <div class="form-group col-sm-4">
-            <label for="Price">Цена:</label>
-            <input id="Price" type="number" class="form-control" name="Price" placeholder="Введите цену" />
-        </div>
-
-        <div class="form-group col-sm-4">
-            <label>Описание:</label>
-            <input id="Description" type="text" class="form-control" name="Description" placeholder="Введите описание" />
-        </div>
-        <button type="submit" class="btn btn-primary ml-3">Добавить</button>
-
-    }
-</body>
-</html>
+}
+@section scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+}

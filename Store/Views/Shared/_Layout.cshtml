@@ -1,18 +1,28 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <!-- layout head -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <!-- layout head -->
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
 </head>
 <body>
     <div class="alert-primary">
         <nav class="navbar justify-content-center nav-pills">
-            <a class="btn btn-outline-primary nav-item nav-link" href="~/Home/HomePage">Домашняя страница</a>
-            <a class="ml-1 btn btn-outline-primary nav-item nav-link" href="~/Storage/StoragePage">Каталог</a>
+            <a class="btn btn-outline-primary nav-item nav-link" href="~/Home/">Домашняя страница</a>
+            <a class="ml-1 btn btn-outline-primary nav-item nav-link" href="~/Storage/">Каталог</a>
         </nav>
     </div>
+    <!-- layout render body -->
     @RenderBody()
+
+    <!-- / layout render body -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", false)
 </body>
 </html>

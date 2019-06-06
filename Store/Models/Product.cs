@@ -19,6 +19,7 @@ namespace Store.Models
 
         [Required(ErrorMessage ="Укажите цену")]
         [Range(0.0, Double.MaxValue, ErrorMessage ="Неверно указанная сумма")]
+        [DataType(DataType.Text,ErrorMessage = "Неверный формат")]
         public decimal Price { get; set; }
 
         public bool Status { get; set; }
