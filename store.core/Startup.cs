@@ -10,10 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Store.Core.Models;
-using Store.DB;
-namespace store.core
+
+namespace Store.Core
 {
     public class Startup
     {
@@ -33,10 +32,10 @@ namespace store.core
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            
+            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvcCore();
+
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            //DbContextBuilder.InitContext(services,connection);
             services.AddDbContext<Context>(options =>
                 options.UseSqlServer(connection)
             );
@@ -60,12 +59,16 @@ namespace store.core
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc(routes =>
-            {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-            });
+            // app.UseMvc(routes =>
+            // {
+            //     routes.MapRoute(
+            //         name: "default",
+            //         template: "{controller=Home}/{action=Index}/{id?}");
+            // });
+            app.UseRouting();
+            //app.UseEndpoints(endpoints=> endpoints.MapControllers());
+            //app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+
         }
     }
 }

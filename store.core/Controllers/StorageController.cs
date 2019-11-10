@@ -3,8 +3,7 @@ using System.Linq;
 using System;
 using Microsoft.AspNetCore.Mvc;
 using Store.Core.Models;
-using Store.DB;
-using Store.DB.Models;
+using Microsoft.EntityFrameworkCore;
 namespace Store.Core.Controllers
 {
     public class StorageController : Controller
@@ -131,8 +130,7 @@ namespace Store.Core.Controllers
         [HttpPost]
         public ActionResult RemoveProduct(int ID)
         {
-            
-                Product deletedProduct = _db.Products.Find(ID);
+                var deletedProduct = _db.Products.FirstOrDefault(w=>w.Id == ID);
                 if (deletedProduct != null)
                 {
                     _db.Products.Remove(deletedProduct);
