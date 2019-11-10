@@ -8,4 +8,8 @@
     <PackageReference Include="TinyCsvParser" Version="2.5.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Store.CORE\Store.CORE.csproj" />
+  </ItemGroup>
+
 </Project>
