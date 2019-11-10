@@ -1,0 +1,15 @@
+﻿@{
+    ViewBag.Title = "index";
+}
+    <div class="jumbotron">
+        <h1 class="display-4">Фруктовый магазин</h1>
+        <p class="lead">Цены в рублях, евро и долларах</p>
+        <hr class="my-4">
+        <p>Переходите в каталог взгляните на имеющийся ассортимент</p>
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/Storage/StoragePage" role="button">Подглядеть</a>
+
+            <a class="btn btn-primary btn-lg" href="/Home/Some" role="button">Some</a>
+            @Html.ActionLink("Some link", "Some", "Home", new { }, new { @class= "btn btn-primary btn-lg" })
+        </p>
+    </div>
