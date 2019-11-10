@@ -34,6 +34,7 @@ namespace Store.Core
             });
             //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddMvcCore();
+            services.AddControllersWithViews();
 
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<Context>(options =>
@@ -66,8 +67,8 @@ namespace Store.Core
             //         template: "{controller=Home}/{action=Index}/{id?}");
             // });
             app.UseRouting();
-            //app.UseEndpoints(endpoints=> endpoints.MapControllers());
-            //app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
+            app.UseEndpoints(endpoints=> endpoints.MapControllers());
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
 
         }
     }
