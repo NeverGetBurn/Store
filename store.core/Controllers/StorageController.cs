@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 using Microsoft.AspNetCore.Mvc;
 using Store.Core.Models;
+using Store.DB;
+using Store.DB.Models;
 namespace Store.Core.Controllers
 {
     public class StorageController : Controller
     {
+        private readonly Context _db;
+        public StorageController(Context context)
+        {
+             _db = context ?? throw new ArgumentNullException(nameof(context));
+        } 
 
         private readonly USDrate usd = new USDrate();
         private readonly EURrate eur = new EURrate();
@@ -14,10 +22,8 @@ namespace Store.Core.Controllers
         {
             get
             {
-                using (Context db = new Context())
-                {
-                    return db.Products.ToList();
-                }
+                    return _db.Products.ToList();
+                
             }
         }
 
@@ -70,22 +76,20 @@ namespace Store.Core.Controllers
             switch (model.Action)
             {
                 case SearchType.byName:
-                    using (Context db = new Context())
-                    {
+                    
                         products.AddRange(
-                            db.Products
+                            _db.Products
                             .Where(w => w.Name.Contains(model.SearchString))
                             .ToList());
-                    }
+                    
                     break;
                 case SearchType.byDescription:
-                    using (Context db = new Context())
-                    {
+                    
                         products.AddRange(
-                            db.Products
+                            _db.Products
                             .Where(w => w.Description.Contains(model.SearchString))
                             .ToList());
-                    }
+                    
                     break;
                 default:
                     return RedirectToAction(nameof(SomeError));
@@ -106,11 +110,10 @@ namespace Store.Core.Controllers
             if (ModelState.IsValid)
             {
                 product.Status = true; // при добавлении модели статус становится "в наличии"
-                using (Context db = new Context())
-                {
-                    db.Products.Add(product);
-                    db.SaveChanges();
-                }
+                
+                    _db.Products.Add(product);
+                    _db.SaveChanges();
+                
                 return RedirectToAction(nameof(Index));
             }
             else
@@ -128,15 +131,14 @@ namespace Store.Core.Controllers
         [HttpPost]
         public ActionResult RemoveProduct(int ID)
         {
-            using (Context db = new Context())
-            {
-                Product deletedProduct = db.Products.Find(ID);
+            
+                Product deletedProduct = _db.Products.Find(ID);
                 if (deletedProduct != null)
                 {
-                    db.Products.Remove(deletedProduct);
-                    db.SaveChanges();
+                    _db.Products.Remove(deletedProduct);
+                    _db.SaveChanges();
                 }
-            }
+            
             return RedirectToAction(nameof(Index));
         }
 
