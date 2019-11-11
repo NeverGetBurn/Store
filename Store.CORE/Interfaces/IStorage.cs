@@ -4,7 +4,7 @@ namespace Store.CORE.Interfaces
 {
     using System.Collections.Generic;
     using Models;
-    public interface IStorage
+    public interface IStorage:IDisposable
     {
          IQueryable<Product> Products{get;}
          Product Insert(Product value);
