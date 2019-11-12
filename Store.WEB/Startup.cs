@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Store.CORE.Interfaces;
 
 namespace Store.WEB
 {
@@ -23,7 +24,10 @@ namespace Store.WEB
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var sqlite = Configuration.GetConnectionString("sqlite");
             services.AddControllersWithViews();
+            services.AddScoped<Func<IStorage>>((_)=> ()=>new Store.DAL.SQLite.Store(sqlite));
+//            services.AddScoped<IStorage>((_)=> new Store.DAL.Memory.Store());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,8 +42,8 @@ namespace Store.WEB
                 app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

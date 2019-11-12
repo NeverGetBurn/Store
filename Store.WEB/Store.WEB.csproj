@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Store.CORE\Store.CORE.csproj" />
+    <ProjectReference Include="..\Store.DAL.SQLite\Store.DAL.SQLite.csproj" />
+    <ProjectReference Include="..\Store.DAL.Memory\Store.DAL.Memory.csproj" />
   </ItemGroup>
 
 </Project>

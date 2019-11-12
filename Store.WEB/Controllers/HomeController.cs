@@ -18,12 +18,14 @@ namespace Store.WEB.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public ActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        [HttpGet]
+        public ActionResult Some(int number)
         {
             return View();
         }

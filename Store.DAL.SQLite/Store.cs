@@ -68,5 +68,12 @@ namespace Store.DAL.SQLite
             _context.SaveChanges();
             return result;
         }
+
+        public bool Delete(Product value)
+        {
+            _context.Remove(value);
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

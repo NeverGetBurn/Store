@@ -1,0 +1,7 @@
+CREATE TABLE Products (
+    Id INTEGER(8) PRIMARY KEY,
+    Name TEXT NOT NULL,
+    Description TEXT NOT NULL,
+    Price REAL NOT NULL,
+    Status INTEGER(1) DEFAULT 0,
+) WITHOUT ROWID;
