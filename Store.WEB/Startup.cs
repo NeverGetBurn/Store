@@ -1,10 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -25,9 +22,12 @@ namespace Store.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             var sqlite = Configuration.GetConnectionString("sqlite");
-            services.AddControllersWithViews();
-            services.AddScoped<Func<IStorage>>((_)=> ()=>new Store.DAL.SQLite.Store(sqlite));
-//            services.AddScoped<IStorage>((_)=> new Store.DAL.Memory.Store());
+
+            services.AddMvcCore()
+                .AddRazorViewEngine()
+                .AddCors();
+//            services.AddScoped<Func<IStorage>>((_)=> ()=>new Store.DAL.SQLite.Store(sqlite));
+            services.AddScoped<Func<IStorage>>((_)=> ()=>new Store.DAL.Memory.Store());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,17 +45,10 @@ namespace Store.WEB
                 app.UseHttpsRedirection();
             }
             app.UseStaticFiles();
-
             app.UseRouting();
-
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            //app.UseAuthorization();
+            app.UseCors();
+            app.UseEndpoints(endpoints => endpoints.MapDefaultControllerRoute());
         }
     }
 }
